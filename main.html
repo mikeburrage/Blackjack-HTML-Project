@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+	
+			<title>Blackjack</title>
+
+		<link rel="stylesheet" href="blackjack_style.css">
+		<link rel="shortcut icon" type="image/png" href="cards/title_image.jpg">
+		
+		<script src="blackjack_javasript.js"> </script>
+	</head>
+	
+	<body onload="createDeck(); shuffleDeck(); disableHitBtn(); disableStayBtn(); setLayoutSize();">
+
+		<header>
+			<h1>BlackJack</h1>
+		</header>
+	
+		<section>
+			
+			<div id="dealer_container">
+			
+			</div>
+    
+			<div id="player_container">
+			
+			</div>
+			
+		</section>
+	
+		<section id="button_container">
+			<button type="button" id="playBtn" onclick="startingDeal()"> Play! </button>
+			<button type="button" id="hitBtn" onclick="hit_me()"> Hit Me! </button>
+			<button type="button" id="stayBtn" onclick=""> Stay! </button>
+	
+			<p id="moreThan21"></p>
+		</section>
+	<!--
+		<aside>
+			<p id="totalCards">The total number of cards are :</p>
+			<p id="dealtCards">Dealer dealt no cards.</p>
+			<p id="theDealtCard">The dealt card was: Blank</p>
+			<p id="totalValueofDealersCards">The total value of the dealers dealt cards is: 0</p>
+			<p id="totalValueofPlayersCards">The total value of the players dealt cards is: 0</p>
+		</aside>
+	-->
+	</body>
+</html>
