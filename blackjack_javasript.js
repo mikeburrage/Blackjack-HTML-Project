@@ -3,7 +3,9 @@
 // ---------------------
 // + Fix layout
 // + Add deck spot to layout
-// + 
+// + Only allow he user to enter in a 1 or 10 when an Ace is drawn
+// + Splitting the deck
+// + Add Betting
 
 var startDeal = 4;
 var deckTotal = 52;
@@ -144,7 +146,9 @@ function startingDeal() {
 		disablePlayBtn();
 		enableHitBtn();
 		enableStayBtn();
-		//document.getElementById("dealtCards").innerHTML = "Dealer dealt " + (cardCounter+1) + " cards.";
+		
+		// Debugger Line
+		document.getElementById("dealtCards").innerHTML = "Dealer dealt " + (cardCounter+1) + " cards.";
 	}
 	
 	for(handCounter = 0; handCounter < playersHand.length; handCounter++) {
@@ -168,8 +172,8 @@ function startingDeal() {
 		cardImg.setAttribute('id', 'thumb'+ dealerCounter);
 		document.getElementById('dealer_container').appendChild(cardImg);
 	}
-	
-	//document.getElementById("totalCards").innerHTML = "The total number of cards are :" + theDeck.length + ".";
+	// Debugger Line
+	document.getElementById("totalCards").innerHTML = "The total number of cards are :" + theDeck.length + ".";
 }
 
 function hit_me() {
@@ -203,15 +207,16 @@ function hit_me() {
 				//dealersCardImg.setAttribute('id', 'thumb' + handCounter);
 				document.getElementById('dealer_container').appendChild(dealersCardImg);
 		}
-		
-	//document.getElementById("theDealtCard").innerHTML = "The dealt card was:" + text;
+	// Debugger Line
+	document.getElementById("theDealtCard").innerHTML = "The dealt card was:" + text;
 	remove_card(i);
 }
 
 function remove_card(index) {
 
 	theDeck.splice(index, 1);
-	//document.getElementById("totalCards").innerHTML = "The total number of cards are :" + theDeck.length + ".";
+	// Debugger Line
+	document.getElementById("totalCards").innerHTML = "The total number of cards are :" + theDeck.length + ".";
 }
 
 function getTotalOfDealtDealersCards(passedCard) {
@@ -225,12 +230,17 @@ function getTotalOfDealtDealersCards(passedCard) {
 	
 	} else if(passedNum == "a") {
 	
-		var aceOrOne = prompt("Do you want the value of this Ace to be a One or a Ten?", "");
-    
-		if (aceOrOne != null) {
+		//do {
+			//only allow he user to enter in a 1 or 11
+			var aceOrOne = prompt("Do you want the value of this Ace to be a One or a Eleven?", "");
+		
+			if (aceOrOne != null && (aceOrOne == 1 || aceOrOne == 11)) {
 
-			passedNum = aceOrOne;
-		}
+				passedNum = aceOrOne;
+				//break;
+			}
+		//} while (aceOrOne != 1 || aceOrOne != 11);
+	
 	}
 	
 	dealersDealtTotal = dealersDealtTotal + parseInt(passedNum);
@@ -238,11 +248,14 @@ function getTotalOfDealtDealersCards(passedCard) {
 	if(checkTotal(dealersDealtTotal) == true) {
 	
 		document.getElementById("moreThan21").innerHTML = "Dealer is bust";
-		enablePlayBtn();
+		document.getElementById("winOrLose").innerHTML = "Winner Winner Chicken Dinner";
+		disablePlayBtn();
 		disableHitBtn();
 		disableStayBtn();
+		enableResetBtn();
 	}
-	//document.getElementById("totalValueofDealersCards").innerHTML = "The total value of the dealt cards is: " + dealersDealtTotal;
+	// Debugger Line
+	document.getElementById("totalValueofDealersCards").innerHTML = "The total value of the dealt cards is: " + dealersDealtTotal;
 }
 
 function getTotalOfDealtPlayersCards(passedCard) {
@@ -260,11 +273,14 @@ function getTotalOfDealtPlayersCards(passedCard) {
 	if(checkTotal(playersDealtTotal) == true) {
 	
 		document.getElementById("moreThan21").innerHTML = "Player is bust";
-		enablePlayBtn();
+		document.getElementById("winOrLose").innerHTML = "Sorry you lose, play again?";
+		disablePlayBtn();
 		disableHitBtn();
 		disableStayBtn();
+		enableResetBtn();
 	}
-	//document.getElementById("totalValueofPlayersCards").innerHTML = "The total value of the dealt cards is: " + playersDealtTotal;
+	// Debugger Line
+	document.getElementById("totalValueofPlayersCards").innerHTML = "The total value of the dealt cards is: " + playersDealtTotal;
 }
 
 function checkTotal(passedTotal) {
@@ -307,4 +323,63 @@ function disableStayBtn() {
 function enableStayBtn() {
     
 	document.getElementById("stayBtn").disabled = false;
+}
+
+function disableResetBtn() {
+    
+	document.getElementById("resetBtn").disabled = true;
+}
+
+function enableResetBtn() {
+    
+	document.getElementById("resetBtn").disabled = false;
+}
+
+function clearField() {
+
+	var playerCardImages = document.getElementById('player_container');
+	var dealerCardImages = document.getElementById('dealer_container');
+	
+	
+	while (playerCardImages.firstChild) {
+		
+		playerCardImages.removeChild(playerCardImages.firstChild);
+	}
+	
+	while (dealerCardImages.firstChild) {
+		
+		dealerCardImages.removeChild(dealerCardImages.firstChild);
+	}
+}
+
+function resetDebuggerText() {
+
+	document.getElementById("totalCards").innerHTML = "The total number of cards are : " + deckTotal;
+	document.getElementById("dealtCards").innerHTML = "Dealer dealt no cards.";
+	document.getElementById("theDealtCard").innerHTML = "The dealt card was: Blank";
+	document.getElementById("totalValueofDealersCards").innerHTML = "The total value of the dealers dealt cards is: " + dealersDealtTotal;
+	document.getElementById("totalValueofPlayersCards").innerHTML = "The total value of the players dealt cards is: " + playersDealtTotal;
+}
+
+function resetGame() {
+
+	startDeal = 4;
+	deckTotal = 52;
+	theDeck = [];
+	playersHand = [];
+	playerIndex = 0;
+	dealersHand = [];
+	dealerIndex = 0;
+	playersDealtTotal = 0;
+	dealersDealtTotal = 0;
+	
+	createDeck();
+	shuffleDeck();
+	clearField();
+	resetDebuggerText();
+	
+	enablePlayBtn();
+	
+	document.getElementById("moreThan21").innerHTML = "";
+	document.getElementById("winOrLose").innerHTML = "";
 }

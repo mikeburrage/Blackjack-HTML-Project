@@ -12,7 +12,7 @@
 		<script src="blackjack_javasript.js"> </script>
 	</head>
 	
-	<body onload="createDeck(); shuffleDeck(); disableHitBtn(); disableStayBtn(); setLayoutSize();">
+	<body onload="createDeck(); shuffleDeck(); disableHitBtn(); disableStayBtn(); disableResetBtn(); setLayoutSize();">
 
 		<header>
 			<h1>BlackJack</h1>
@@ -34,17 +34,21 @@
 			<button type="button" id="playBtn" onclick="startingDeal()"> Play! </button>
 			<button type="button" id="hitBtn" onclick="hit_me()"> Hit Me! </button>
 			<button type="button" id="stayBtn" onclick=""> Stay! </button>
+			
+			<button type="button" id="resetBtn" onclick="resetGame()"> Replay Game </button>
 	
-			<p id="moreThan21"></p>
+			<h1 id="moreThan21"></h1>
+			<h1 id="winOrLose"></h1>
+			
 		</section>
-	<!--
+		
 		<aside>
-			<p id="totalCards">The total number of cards are :</p>
+			<p id="totalCards">The total number of cards are : 52</p>
 			<p id="dealtCards">Dealer dealt no cards.</p>
 			<p id="theDealtCard">The dealt card was: Blank</p>
 			<p id="totalValueofDealersCards">The total value of the dealers dealt cards is: 0</p>
 			<p id="totalValueofPlayersCards">The total value of the players dealt cards is: 0</p>
 		</aside>
-	-->
+	
 	</body>
 </html>
